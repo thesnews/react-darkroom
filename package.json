@@ -1,7 +1,7 @@
 {
   "name": "react-darkroom",
-  "version": "0.3.6",
-  "description": "HTML5 Image upload and edit React Component.",
+  "version": "0.3.7",
+  "description": "HTML5 Image upload and edit React Component. Forked from https://github.com/MattMcFarland/react-darkroom.git",
   "engines": {
     "node": ">=4.2.1"
   },
@@ -21,7 +21,7 @@
   "main": "lib/index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MattMcFarland/react-darkroom.git"
+    "url": "git+https://github.com/thesnews/react-darkroom.git"
   },
   "keywords": [
     "react-component",
