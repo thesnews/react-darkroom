@@ -19,11 +19,17 @@ export default class Canvas extends React.Component {
    * @param to {{width: number, height: number}}
    * @returns {{width: number, height: number}}
    */
-  getBitmapData(source) {
+  getBitmapData(source, callback = () => {}) {
     try {
       if (source !== this._data) {
         this._cache = new Image();
+        this._cache.crossOrigin = 'Anonymous';
         this._data = Object.assign(source);
+
+        this._cache.onload = () => {
+          callback.call(this, this._cache);
+        }
+
         this._cache.src = this._data;
       }
       return this._cache;
@@ -55,29 +61,30 @@ export default class Canvas extends React.Component {
     }
 
     if (this.props.source && !this.cache) {
-      let image = this.getBitmapData(this.props.source);
-      let angle = parseInt(this.props.angle) || 0;
-      let boundRect = {
-        width: parseInt(this.props.width),
-        height: parseInt(this.props.height)
-      };
-      let dims = {
-        width: parseInt(image.width),
-        height: parseInt(image.height)
-      };
+      this.getBitmapData(this.props.source, (image) => {
+        let angle = parseInt(this.props.angle) || 0;
+        let boundRect = {
+          width: parseInt(this.props.width),
+          height: parseInt(this.props.height)
+        };
+        let dims = {
+          width: parseInt(image.width),
+          height: parseInt(image.height)
+        };
 
-      Transform.rotateImage(ctx, angle);
+        Transform.rotateImage(ctx, angle);
 
-      let scaledRect = Transform.constrainProportions(dims, boundRect);
-      let position = Transform.centerRect(scaledRect, boundRect);
+        let scaledRect = Transform.constrainProportions(dims, boundRect);
+        let position = Transform.centerRect(scaledRect, boundRect);
 
-      Transform.renderImage(ctx, image, position, scaledRect);
-      setTimeout(() => {
-        let img = new Image();
-        img.crossOrigin = 'Anonymous';
-        img.src = canvas.toDataURL("image/png");
-        this.cache = img;
-      }, 100);
+        Transform.renderImage(ctx, image, position, scaledRect);
+        setTimeout(() => {
+          let img = new Image();
+          img.src = canvas.toDataURL("image/png");
+          this.cache = img;
+        }, 100);
+
+      });
     }
   }
 
