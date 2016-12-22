@@ -1,6 +1,6 @@
 {
   "name": "react-darkroom-tsn",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "description": "HTML5 Image upload and edit React Component. Forked from https://github.com/MattMcFarland/react-darkroom.git. Published so deployments run properly.",
   "engines": {
     "node": ">=4.2.1"
